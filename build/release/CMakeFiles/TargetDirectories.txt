@@ -1,3 +1,0 @@
-/home/blackcan/Documents/Hax0rStuff/Rotcev/build/release/CMakeFiles/rotcev.dir
-/home/blackcan/Documents/Hax0rStuff/Rotcev/build/release/CMakeFiles/edit_cache.dir
-/home/blackcan/Documents/Hax0rStuff/Rotcev/build/release/CMakeFiles/rebuild_cache.dir
