@@ -1,0 +1,1 @@
+g++ -g -O0 -DDEBUG -Wall -Wextra -Werror -Wl,--dependency-file=CMakeFiles/rotcev.dir/link.d CMakeFiles/rotcev.dir/src/rotcev.cpp.o CMakeFiles/rotcev.dir/src/main.cpp.o -o rotcev

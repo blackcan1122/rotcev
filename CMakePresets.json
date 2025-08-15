@@ -1,0 +1,111 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "description": "Debug build with full debugging info",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "description": "Optimized release build",
+            "binaryDir": "${sourceDir}/build/release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "profile",
+            "displayName": "Profile",
+            "description": "Profiling build with gprof support",
+            "binaryDir": "${sourceDir}/build/profile",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Profile"
+            }
+        },
+        {
+            "name": "testing",
+            "displayName": "Testing",
+            "description": "Testing build with coverage",
+            "binaryDir": "${sourceDir}/build/testing",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Testing"
+            }
+        },
+        {
+            "name": "development",
+            "displayName": "Development",
+            "description": "Development build with extra warnings",
+            "binaryDir": "${sourceDir}/build/development",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Development"
+            }
+        },
+        {
+            "name": "sanitize",
+            "displayName": "Sanitize",
+            "description": "Debug build with AddressSanitizer and UBSan",
+            "binaryDir": "${sourceDir}/build/sanitize",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Sanitize"
+            }
+        },
+        {
+            "name": "fastdebug",
+            "displayName": "Fast Debug",
+            "description": "Lightly optimized debug build",
+            "binaryDir": "${sourceDir}/build/fastdebug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "FastDebug"
+            }
+        },
+        {
+            "name": "minsize",
+            "displayName": "Minimum Size",
+            "description": "Size-optimized build",
+            "binaryDir": "${sourceDir}/build/minsize",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "MinSize"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "release",
+            "configurePreset": "release"
+        },
+        {
+            "name": "profile",
+            "configurePreset": "profile"
+        },
+        {
+            "name": "testing",
+            "configurePreset": "testing"
+        },
+        {
+            "name": "development",
+            "configurePreset": "development"
+        },
+        {
+            "name": "sanitize",
+            "configurePreset": "sanitize"
+        },
+        {
+            "name": "fastdebug",
+            "configurePreset": "fastdebug"
+        },
+        {
+            "name": "minsize",
+            "configurePreset": "minsize"
+        }
+    ]
+}
