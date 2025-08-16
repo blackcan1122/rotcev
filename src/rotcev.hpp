@@ -19,7 +19,27 @@
 
 #endif
 
-// TODO:
+// TODO: Container improvements and missing functionality
+// TODO: Add size() and capacity() methods for standard container interface
+// TODO: Add const versions of operator[] for read-only access
+// TODO: Implement iterators (begin(), end(), cbegin(), cend()) for range-based loops
+// TODO: Add emplace_back() for in-place construction to avoid unnecessary copies
+// TODO: Add pop_back() method for removing last element
+// TODO: Add clear() method to remove all elements while keeping allocated memory
+// TODO: Add reserve() method for pre-allocating memory to avoid reallocations
+// TODO: Add shrink_to_fit() method to reduce capacity to match size
+// TODO: Add empty() method to check if container has no elements
+// TODO: Add front() and back() methods for accessing first and last elements
+// TODO: Add copy constructor and copy assignment operator
+// TODO: Add move constructor and move assignment operator
+// TODO: Add comparison operators (==, !=, <, <=, >, >=) for container comparisons
+// TODO: Add insert() and erase() methods for arbitrary position modifications
+// TODO: Add bounds checking for operator[] in debug builds (at() method)
+// TODO: Add exception safety guarantees and proper RAII
+// TODO: Consider adding small buffer optimization for tiny objects
+// TODO: Add allocator template parameter for custom memory management
+// TODO: Optimize growth factors based on empirical performance testing
+// TODO: Add noexcept specifications where appropriate for better optimization
 
 namespace blck
 {
