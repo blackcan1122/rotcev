@@ -12,6 +12,8 @@ int main()
     std::cout << "Test 1 - std::string - one push_back" << std::endl;
     std::cout << "========" << std::endl;
     std::string test_string = std::string("HEY");
+
+
     // rotcev
     Rotcev<std::string> MyRotcev;
     auto start = std::chrono::high_resolution_clock::now();
@@ -27,6 +29,8 @@ int main()
     std::cout << "" << std::endl;
     std::cout << "Test 1 - std::string - one push_back" << std::endl;
     std::cout << "========" << std::endl;
+
+    
     // std::vector
     std::vector<std::string> MyOtherVec;
     auto start2 = std::chrono::high_resolution_clock::now();

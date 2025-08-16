@@ -5,6 +5,12 @@
 #include <cstring>
 #include <chrono>
 
+//TODO:
+// Fix Memory Leak
+// Add copy constructor for null refs
+// properly destruct copied objects
+// add some other helper functions
+// return [] pointer or ref but no copy
 
 template <typename T>
 class Rotcev {
