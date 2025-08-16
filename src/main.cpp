@@ -15,7 +15,7 @@ int main()
 
 
     // rotcev
-    Rotcev<std::string> MyRotcev;
+    blck::Rotcev<std::string> MyRotcev;
     auto start = std::chrono::high_resolution_clock::now();
     MyRotcev.push_back(test_string);
     auto end = std::chrono::high_resolution_clock::now();
