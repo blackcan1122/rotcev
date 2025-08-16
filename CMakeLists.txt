@@ -4,6 +4,11 @@ PROJECT(Rotcev
     DESCRIPTION "Rotcev - A Custom Vector Implementation"
     LANGUAGES CXX)
 
+PROJECT(Rotcev_Profiling
+        VERSION 0.1.0
+        DESCRIPTION "Rotcev Profiling Project"
+        LANGUAGES CXX)
+
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_COMPILER gcc)
@@ -69,8 +74,10 @@ message(STATUS "Binary directory: ${CMAKE_BINARY_DIR}")
 message(STATUS "=== END CONFIGURATION ===")
 
 include_directories(src)
-#add_library(rotcev SHARED src/rotcev.cpp src/main.cpp)
-add_executable(rotcev src/rotcev.cpp src/main.cpp)
+add_library(rotcev SHARED src/rotcev.cpp)
+
+add_executable(Rotcev_Profiling src/main.cpp src/logging_profiling.cpp)
+target_link_libraries(Rotcev_Profiling PRIVATE rotcev)
 
 # Print target-specific info after target creation
 get_target_property(TARGET_COMPILE_FLAGS rotcev COMPILE_FLAGS)
