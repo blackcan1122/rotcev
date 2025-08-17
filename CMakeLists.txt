@@ -4,15 +4,12 @@ PROJECT(Rotcev
     DESCRIPTION "Rotcev - A Custom Vector Implementation"
     LANGUAGES CXX)
 
-PROJECT(Rotcev_Profiling
-        VERSION 0.1.0
-        DESCRIPTION "Rotcev Profiling Project"
-        LANGUAGES CXX)
-
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
+
 
 # Define custom build types with more options
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Profile;Testing;Development;Sanitize;FastDebug;MinSize" CACHE STRING "Available build types" FORCE)
@@ -74,10 +71,56 @@ message(STATUS "Binary directory: ${CMAKE_BINARY_DIR}")
 message(STATUS "=== END CONFIGURATION ===")
 
 include_directories(src)
-add_library(rotcev SHARED src/rotcev.cpp)
 
+# Create a header-only interface library instead of a compiled library
+add_library(rotcev INTERFACE)
+
+# Specify that this is a header-only library and set include directories
+target_include_directories(rotcev INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<INSTALL_INTERFACE:include>
+)
+
+# Set C++17 requirement for users of the library
+target_compile_features(rotcev INTERFACE cxx_std_17)
+
+# Optional: Add compile definitions for users
+target_compile_definitions(rotcev INTERFACE 
+    $<$<CONFIG:Debug>:ROTCEV_DEBUG>
+    $<$<CONFIG:Release>:ROTCEV_RELEASE>
+)
+
+# Create the example/test executable that uses the header-only library
 add_executable(Rotcev_Profiling src/main.cpp src/logging_profiling.cpp)
 target_link_libraries(Rotcev_Profiling PRIVATE rotcev)
+
+# Create a custom target to copy headers to build output directory
+add_custom_target(copy_headers ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/include/rotcev
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/src/rotcev.hpp
+        ${CMAKE_BINARY_DIR}/include/rotcev/rotcev.hpp
+    COMMENT "Copying rotcev.hpp to build output directory"
+    SOURCES ${CMAKE_SOURCE_DIR}/src/rotcev.hpp
+)
+
+# Make sure headers are copied when building the executable
+add_dependencies(Rotcev_Profiling copy_headers)
+
+# Installation rules for header-only library
+install(TARGETS rotcev
+    EXPORT rotcev-targets
+    INCLUDES DESTINATION include
+)
+
+install(FILES src/rotcev.hpp
+    DESTINATION include/rotcev
+)
+
+install(EXPORT rotcev-targets
+    FILE rotcev-config.cmake
+    DESTINATION lib/cmake/rotcev
+)
 
 # Print target-specific info after target creation
 get_target_property(TARGET_COMPILE_FLAGS rotcev COMPILE_FLAGS)

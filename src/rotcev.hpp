@@ -6,18 +6,8 @@
 #include <chrono>
 #include <array>
 
-// Define export macros for cross-platform compatibility
-#ifdef _WIN32
-    #ifdef ROTCEV_EXPORTS
-        #define ROTCEV_API __declspec(dllexport)
-    #else
-        #define ROTCEV_API __declspec(dllimport)
-    #endif
-#else
-    // Linux/GCC: Use visibility attributes
-    #define ROTCEV_API __attribute__((visibility("default")))
-
-#endif
+// For header-only library, we don't need export macros
+// The template will be compiled directly into the user's code
 
 // TODO: Container improvements and missing functionality
 // TODO: Add size() and capacity() methods for standard container interface
@@ -45,7 +35,7 @@ namespace blck
 {
 
     template <typename T>
-    class ROTCEV_API rotcev
+    class rotcev
     {
 
 private:
