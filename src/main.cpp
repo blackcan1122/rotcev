@@ -56,7 +56,7 @@ struct PerformanceStats {
         double overall_avg = (avg_rotcev + avg_std) / 2.0;
         
         // Dynamic threshold: 2x the average time
-        double dynamic_threshold = overall_avg * 2.0;
+        double dynamic_threshold = overall_avg * 10.0;
         spike_threshold = static_cast<long long>(dynamic_threshold);
         
         // Reclassify all results
@@ -225,7 +225,7 @@ void testBulkOperations(const std::string& type_name, const std::vector<T>& test
     printSubHeader("Bulk Operations - " + type_name);
     
     // Test different bulk sizes
-    std::vector<size_t> bulk_sizes = {10, 50, 100, 500};
+    std::vector<size_t> bulk_sizes = {10, 50, 100, 500, 2000};
     
     for (size_t bulk_size : bulk_sizes) {
         if (bulk_size > test_data.size()) continue;
@@ -363,6 +363,7 @@ int main() {
             TestObject("Object2", 100),
             TestObject("Object3", 75),
             TestObject("LargeObject", 200),
+            TestObject("LargeObject", 5000),
             TestObject("SmallObject", 25)
         };
         

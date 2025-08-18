@@ -62,6 +62,30 @@ private:
         free(m_Start);
     }
 
+    template<typename U>
+    inline void AllocateNewSpace(U&& Value)
+    {
+        void *Start = 0x0;
+        bool needsReallocation = (m_Capacity < sizeof(T) * (m_Size + 1));
+
+        if (needsReallocation) {
+            size_t NewAllocationSize = static_cast<size_t>(m_Size * get_growth_factor_factor());
+            m_Capacity = sizeof(T) * std::max(NewAllocationSize, m_Size + 1);
+            Start = malloc(m_Capacity);
+
+            if (m_Size > 0) {
+                MoveRessource(Start);
+            }
+        } else {
+            Start = (void*)m_Start;
+        }
+        
+        T *NewOBJ = ((T *)Start) + m_Size;
+        new (NewOBJ) T(std::forward<U>(Value));
+        m_Start = (T *)Start;
+        ++m_Size;
+    }
+
 public:
         rotcev()
         {
@@ -80,73 +104,15 @@ public:
             }
         }
 
-        void push_back(T &Value) 
-        {
-            void *Start = 0x0;
-            bool needsReallocation = (m_Capacity < sizeof(T) * (m_Size + 1));
-
-            if (needsReallocation) {
-                size_t NewAllocationSize = static_cast<size_t>(m_Size * get_growth_factor_factor());
-                m_Capacity = sizeof(T) * std::max(NewAllocationSize, m_Size + 1);
-                Start = malloc(m_Capacity);
-
-                if (m_Size > 0) {
-                    MoveRessource(Start);
-                }
-            } else {
-                Start = (void*)m_Start;
-            }
         
-            T *NewOBJ = ((T *)Start) + m_Size;
-            new (NewOBJ) T(Value);
-            m_Start = (T *)Start;
-            ++m_Size;
-        }
-
         void push_back(const T &Value)
         {
-            void *Start = 0x0;
-            bool needsReallocation = (m_Capacity < sizeof(T) * (m_Size + 1));
-
-            if (needsReallocation) {
-                size_t NewAllocationSize = static_cast<size_t>(m_Size * get_growth_factor_factor());
-                m_Capacity = sizeof(T) * std::max(NewAllocationSize, m_Size + 1);
-                Start = malloc(m_Capacity);
-
-                if (m_Size > 0) {
-                    MoveRessource(Start);
-                }
-            } else {
-                Start = (void*)m_Start;
-            }
-        
-            T *NewOBJ = ((T *)Start) + m_Size;
-            new (NewOBJ) T(Value);
-            m_Start = (T *)Start;
-            ++m_Size; 
+            this->AllocateNewSpace(Value);
         }
 
         void push_back(T &&Value)
         {
-            void *Start = 0x0;
-            bool needsReallocation = (m_Capacity < sizeof(T) * (m_Size + 1));
-
-            if (needsReallocation) {
-                size_t NewAllocationSize = static_cast<size_t>(m_Size * get_growth_factor_factor());
-                m_Capacity = sizeof(T) * std::max(NewAllocationSize, m_Size + 1);
-                Start = malloc(m_Capacity);
-
-                if (m_Size > 0) {
-                    MoveRessource(Start);
-                }
-            } else {
-                Start = (void*)m_Start;
-            }
-        
-            T *NewOBJ = ((T *)Start) + m_Size;
-            new (NewOBJ) T(std::move(Value));
-            m_Start = (T *)Start;
-            ++m_Size;
+            this->AllocateNewSpace(std::move(Value));
         }
 
         T* operator[](int S)
@@ -154,6 +120,13 @@ public:
             return (m_Start + S);
         }
 
+
+        inline size_t Size()
+        {
+            return m_Size;
+        }
+
+        
         
 
 private:
