@@ -91,7 +91,7 @@ target_compile_definitions(rotcev INTERFACE
 )
 
 # Create the example/test executable that uses the header-only library
-add_executable(Rotcev_Profiling src/main.cpp src/logging_profiling.cpp)
+add_executable(Rotcev_Profiling src/main.cpp )
 target_link_libraries(Rotcev_Profiling PRIVATE rotcev)
 
 # Create a custom target to copy headers to build output directory

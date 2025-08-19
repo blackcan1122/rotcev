@@ -126,8 +126,13 @@ public:
             return m_Size;
         }
 
-        
-        
+        rotcev(const rotcev& other)
+        {
+            for (size_t i = 0; i < other.m_Size; i++)
+            {
+                this->push_back(*(other.m_Start + i));
+            }
+        }
 
 private:
 
