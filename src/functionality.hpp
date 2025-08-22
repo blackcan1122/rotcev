@@ -34,6 +34,17 @@ namespace Func
                 }
                 Input.push_back(TempArray);
             }
+
+            if constexpr (std::is_same<T, blck::rotcev<int*>>::value)
+            {
+                blck::rotcev<int*> TempArray;
+                for (size_t j = 0; j < 10000; j++)
+                {
+                    int* a = new int(j);
+                    TempArray.push_back(a);
+                }
+                Input.push_back(TempArray);
+            }
         }
     }
 
@@ -46,25 +57,58 @@ namespace Func
         blck::rotcev<blck::rotcev<int>> TwoDimInt;
         blck::rotcev<blck::rotcev<int*>> TwoDimIntPtr;
 
+        std::vector<int> test;
+
         FillArray<int>(IntContainer);
         FillArray<int*>(IntPtrContainer);
         FillArray<blck::rotcev<int>>(TwoDimInt);
+        FillArray<blck::rotcev<int*>>(TwoDimIntPtr);
 
-        auto now = std::chrono::high_resolution_clock::now();
+        // auto now = std::chrono::high_resolution_clock::now();
 
-        volatile int sum = 0;
-        for (size_t i = 0; i < TwoDimInt.Size(); i++)
+        // volatile int sum = 0;
+        // for (size_t i = 0; i < TwoDimInt.Size(); i++)
+        // {
+        //     for (size_t j = 0; j < TwoDimInt[i].Size(); j++)
+        //     {
+        //     sum += TwoDimInt[i][j];
+        //     }
+        // }
+
+        // (void)sum;
+        // auto end = std::chrono::high_resolution_clock::now();
+
+        // std::cout << "looping through: " << TwoDimInt.Size()*10000 << " Elements Took: " << (end - now).count() << " nanoseconds" << std::endl;
+
+
+
+        // now = std::chrono::high_resolution_clock::now();
+
+        // sum = 0;
+        // for (size_t i = 0; i < TwoDimIntPtr.Size(); i++)
+        // {
+        //     for (size_t j = 0; j < TwoDimIntPtr[i].Size(); j++)
+        //     {
+        //     sum += *(TwoDimIntPtr[i][j]);
+        //     }
+        // }
+
+        // (void)sum;
+        // end = std::chrono::high_resolution_clock::now();
+
+        // std::cout << "looping through: " << TwoDimInt.Size()*10000 << " Elements Took: " << (end - now).count() << " nanoseconds";
+
+        for (auto InnerElement : TwoDimInt)
         {
-            for (size_t j = 0; j < TwoDimInt[i]->Size(); j++)
+            for (auto Element : InnerElement)
             {
-            sum += *(*TwoDimInt[i])[j];
+                std::cout << Element << std::endl;
             }
         }
 
-        (void)sum;
-        auto end = std::chrono::high_resolution_clock::now();
-
-        std::cout << "looping through: " << TwoDimInt.Size()*10000 << " Elements Took: " << (end - now).count() << " nanoseconds";
+        std::cout << "Array has " << TwoDimInt.Size() << " Elements" << std::endl;
+        TwoDimInt.pop_back();
+        std::cout << "Array has " << TwoDimInt.Size() << " Elements" << std::endl;
 
         // std::cout << HEADER << "Int Container: " << std::endl;
         // for (size_t i = 0; i<IntContainer.Size(); i++)
